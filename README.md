@@ -27,9 +27,7 @@ WARNING: It's possible to be charged. Pending explanation...
 **Google Cloud Account**
 
 -
--
-
-**Terraform**
+- **Terraform**
 
 -
 
