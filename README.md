@@ -24,13 +24,23 @@ A data pipeline...
 
 WARNING: It's possible to be charged. Pending explanation...
 
-**Google Cloud Account**
+- [GCP Account and gcloud CLI installation]()
+- [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
--
-- **Terraform**
-
--
+Skip those steps if you have already completed them.
 
 ### Setup
 
 ## Future improvements
+
+## Tasks
+
+- Analyse source data
+- Prepare infra with Terraform
+- Design data model
+- Draw data architecture
+- Finish documentation
+
+## References
+
+- https://medium.com/@williamwarley/a-complete-guide-to-deploy-main-services-in-gcp-with-terraform-f16f18655ca8

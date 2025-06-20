@@ -1,0 +1,58 @@
+# Google Cloud Platform Setup
+
+## GCP Account
+
+- Create a [GCP Account](https://console.cloud.google.com/freetrial/) if you don't have one.
+- Create a [GCP project](https://console.cloud.google.com/projectcreate?inv=1&invt=Ab0mdg) and note down the project ID.
+
+## GCP SDK
+
+- Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install) locally.
+- Run:
+
+```
+gcloud init
+```
+
+- Follow the prompts to authenticate with your Google account and set up your project.
+
+## Setup Credentials
+
+- Create a Service Account:
+
+  - Go to GCP Console > IAM & Admin > Service Accounts
+  - Select `+ CREATE SERVICE ACCOUNT`
+  - Enter a name and description
+  - Assign the role `Viewer`
+  - Add the following additional roles: `Storage Admin`, `Storage Object Admin` and `BigQuery Admin`
+
+- Select the service account > Keys > Add Key > Create new key.
+- Choose `JSON` and click `Create`. The key file will be downloaded to your machine.
+
+WARNING: Do not share this key file publicly.
+
+- Rename the .json key file to `google_credentials.json`.
+- Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to point to your downloaded GCP keys:
+
+* Windows
+
+```
+set GOOGLE_APPLICATION_CREDENTIALS="C:\path\to\your\google_credentials.json"
+```
+
+- macOS and Linux
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/google_credentials.json"
+```
+
+- Verify authentication and default credentials
+
+```
+gcloud auth application-default login
+```
+
+- Enable the following service APIs?:
+  - [IAM API](https://console.cloud.google.com/apis/library/iam.googleapis.com?inv=1&invt=Ab0m7A)?
+  - []
+  - []
