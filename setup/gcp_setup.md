@@ -52,7 +52,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/google_credentials.json"
 gcloud auth application-default login
 ```
 
-- Enable the following service APIs?:
+- Ensure that the following service APIs are enabled:
   - [IAM API](https://console.cloud.google.com/apis/library/iam.googleapis.com?inv=1&invt=Ab0m7A)?
-  - []
-  - []
+  - [Cloud Storage](https://console.cloud.google.com/apis/api/storage-component.googleapis.com/credentials?inv=1&invt=Ab0yZw)
+  - [BigQuery](https://console.cloud.google.com/apis/api/bigquery.googleapis.com/metrics?hl=en&inv=1&invt=Ab0ybw)

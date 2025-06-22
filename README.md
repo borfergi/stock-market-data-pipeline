@@ -2,6 +2,8 @@
 
 A data pipeline...
 
+Serverless
+
 ## Dataset
 
 [Polygon UI](https://polygon.io/)
@@ -9,7 +11,7 @@ A data pipeline...
 ## Tools and Technologies
 
 - Data Lake: Google Cloud Storage
-- Transformation: Google Cloud Dataproc
+- Transformation: Google Cloud Dataproc - Spark
 - Data Warehouse: Google BigQuery
 - Data Visualization:
 - Orchestration: Google Composer - Airflow
@@ -22,16 +24,46 @@ A data pipeline...
 
 ### Pre-requisites
 
-WARNING: It's possible to be charged. Pending explanation...
+[!WARNING] It's possible to be charged. Pending explanation...
+
+[!NOTE] Skip the following steps if they are already done.
 
 - [GCP Account and gcloud CLI installation]()
 - [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 
-Skip those steps if you have already completed them.
-
 ### Setup
 
+- Set project ID for TF
+
+```
+terraform init
+```
+
+```
+terraform plan
+```
+
+- Enter your GCP project ID
+
+- A plan for the creation of the different resources will be shown.
+
+- Create the resources
+
+```
+terraform apply
+```
+
+- Type `yes` to confirm.
+
+- Destroy the infra:
+
+```
+terraform destroy
+```
+
 ## Future improvements
+
+-
 
 ## Tasks
 
