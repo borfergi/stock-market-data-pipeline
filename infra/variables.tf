@@ -1,15 +1,15 @@
 variable "project_id" {
-  default = "inspiring-rite-239607"
+  default = ""
   type    = string
 }
 
 variable "service_account" {
   type    = string
-  default = "myproject-user-account@inspiring-rite-239607.iam.gserviceaccount.com"
+  default = ""
 }
 
 variable "polygon_api_key" {
-  default = "zLjgXXDNkacKu3XH7JlMNZO3UeicBmFH"
+  default = ""
   type    = string
 }
 
