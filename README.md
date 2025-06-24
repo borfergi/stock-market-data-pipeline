@@ -1,4 +1,4 @@
-# Financial Market Analysis Data Pipeline
+# Stock Market Analysis Data Pipeline
 
 A data pipeline...
 
@@ -20,20 +20,26 @@ Serverless
 
 ## Data Architecture
 
+-- Future image --
+
 ## Process
 
 ### Pre-requisites
 
-[!WARNING] It's possible to be charged. Pending explanation...
+[!WARNING]
+It's possible to be charged. Pending explanation...
 
-[!NOTE] Skip the following steps if they are already done.
+[!NOTE]
+Skip the following steps if they are already done.
 
 - [GCP Account and gcloud CLI installation]()
 - [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- Follow the steps to [set up GCP](setup/gcp_setup.md)
+- Polygon API ....
 
 ### Setup
 
-- Set project ID for TF
+- Set project ID, service_account, and polygon key in infra/variables.tf file
 
 ```
 terraform init
@@ -43,8 +49,6 @@ terraform init
 terraform plan
 ```
 
-- Enter your GCP project ID
-
 - A plan for the creation of the different resources will be shown.
 
 - Create the resources
@@ -52,6 +56,8 @@ terraform plan
 ```
 terraform apply
 ```
+
+- The environment could take XX minutes to be completely deployed
 
 - Type `yes` to confirm.
 
@@ -61,17 +67,11 @@ terraform apply
 terraform destroy
 ```
 
+One can always create a Dataproc cluster manually. However, in this project, we will leverage the power of airflow to create the Dataproc cluster, submit the PySpark job, and then again delete the Dataproc after finishing the job.
+
 ## Future improvements
 
--
-
-## Tasks
-
-- Analyse source data
-- Prepare infra with Terraform
-- Design data model
-- Draw data architecture
-- Finish documentation
+- Create VPC....
 
 ## References
 

@@ -1,0 +1,32 @@
+[
+    {
+        "name": "DateKey",
+        "type": "DATE",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "FullDate",
+        "type": "DATE",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "DayOfWeek",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Month",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Quarter",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Year",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    }
+]

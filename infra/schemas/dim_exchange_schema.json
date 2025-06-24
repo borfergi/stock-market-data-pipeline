@@ -1,0 +1,22 @@
+[
+    {
+        "name": "ExchangeCode",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "ExchangeName",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "MIC",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "OperatingMIC",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    }
+]

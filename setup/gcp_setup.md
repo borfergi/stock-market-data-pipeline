@@ -56,3 +56,4 @@ gcloud auth application-default login
   - [IAM API](https://console.cloud.google.com/apis/library/iam.googleapis.com?inv=1&invt=Ab0m7A)?
   - [Cloud Storage](https://console.cloud.google.com/apis/api/storage-component.googleapis.com/credentials?inv=1&invt=Ab0yZw)
   - [BigQuery](https://console.cloud.google.com/apis/api/bigquery.googleapis.com/metrics?hl=en&inv=1&invt=Ab0ybw)
+  - [Cloud Composer](https://console.cloud.google.com/apis/library/composer.googleapis.com?hl=en&inv=1&invt=Ab09MQ)

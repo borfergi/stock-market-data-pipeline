@@ -1,0 +1,52 @@
+[
+    {
+        "name": "DateKey",
+        "type": "DATE",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "Ticker",
+        "type": "STRING",
+        "mode": "REQUIRED"
+    },
+    {
+        "name": "Open",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "High",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Low",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Close",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Volume",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "VWAP",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "Transactions",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "ExchangeCode",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    }
+]
