@@ -18,10 +18,5 @@
         "name": "Industry",
         "type": "STRING",
         "mode": "NULLABLE"
-    },
-    {
-        "name": "MarketCap",
-        "type": "FLOAT",
-        "mode": "NULLABLE"
     }
 ]

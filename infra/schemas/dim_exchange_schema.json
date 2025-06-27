@@ -10,12 +10,7 @@
         "mode": "NULLABLE"
     },
     {
-        "name": "MIC",
-        "type": "STRING",
-        "mode": "NULLABLE"
-    },
-    {
-        "name": "OperatingMIC",
+        "name": "Currency",
         "type": "STRING",
         "mode": "NULLABLE"
     }

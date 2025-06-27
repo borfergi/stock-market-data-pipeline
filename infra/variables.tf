@@ -1,15 +1,15 @@
 variable "project_id" {
-  default = "inspiring-rite-239607"
+  default = ""
   type    = string
 }
 
 variable "service_account" {
+  default = ""
   type    = string
-  default = "myproject-user-account@inspiring-rite-239607.iam.gserviceaccount.com"
 }
 
 variable "polygon_api_key" {
-  default = "zLjgXXDNkacKu3XH7JlMNZO3UeicBmFH"
+  default = ""
   type    = string
 }
 
@@ -23,10 +23,8 @@ variable "zone" {
   type    = string
 }
 
-
-
-variable "gcs_bucket_name" {
-  default = "raw-polygon-data-bucket"
+variable "bucket_name" {
+  default = "datalake-stock-market-bucket"
   type    = string
 }
 

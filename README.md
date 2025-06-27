@@ -26,11 +26,11 @@ Serverless
 
 ### Pre-requisites
 
-[!WARNING]
-It's possible to be charged. Pending explanation...
+> [!WARNING]
+> It's possible to be charged. Pending explanation...
 
-[!NOTE]
-Skip the following steps if they are already done.
+> [!NOTE]
+> Skip the following steps if they are already done.
 
 - [GCP Account and gcloud CLI installation]()
 - [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
@@ -61,9 +61,17 @@ terraform apply
 
 - Type `yes` to confirm.
 
+- Upload manually erp_companies.csv file to activate the Composer
+  gsutil cp erp_companies.csv gs://datalake-stock-market-bucket/raw
+
+```
+gsutils ...
+```
+
 - Destroy the infra:
 
 ```
+cd infra/
 terraform destroy
 ```
 

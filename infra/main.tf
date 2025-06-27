@@ -13,19 +13,10 @@ provider "google" {
   zone    = var.zone
 }
 
-/*
-# Google Dataproc
-resource "google_dataproc_cluster" "" {
-  name = ""
-  region = var.region
-  
-  cluster_config {
-}
-*/
 
 # Google Cloud Storage - GCS
-resource "google_storage_bucket" "raw_polygon_data_bucket" {
-  name                        = var.gcs_bucket_name
+resource "google_storage_bucket" "datalake_stock_market_bucket" {
+  name                        = var.bucket_name
   location                    = var.region
   storage_class               = "STANDARD"
   force_destroy               = true
@@ -41,17 +32,39 @@ resource "google_storage_bucket" "raw_polygon_data_bucket" {
   }
 }
 
-# Google Composer
+# Upload dim_date.csv file to recently created GCS bucket
+resource "google_storage_bucket_object" "dim_date_csv" {
+  name         = "dates/dates.csv"
+  bucket       = var.bucket_name
+  source       = "../data/dates.csv"
+  content_type = "text/csv"
+  depends_on   = [google_storage_bucket.datalake_stock_market_bucket]
+}
+# Upload dataproc script transform_stock_data_pipeline.py to recently created GCS bucket
+resource "google_storage_bucket_object" "upload_dataproc_script" {
+  name         = "dataproc_jobs/transform_stock_data.py"
+  bucket       = var.bucket_name
+  source       = "../dataproc_jobs/transform_stock_data.py"
+  content_type = "text/x-python"
+  depends_on   = [google_storage_bucket.datalake_stock_market_bucket]
+}
+
+
+# Google Composer - Airflow
 resource "google_composer_environment" "google_composer" {
   name   = var.composer_name
   region = var.region
 
   config {
     software_config {
-      image_version = "composer-3-airflow-2.10.5-build.6"
+      image_version = "composer-3-airflow-2.10.5-build.6" # Composer and Airflow versions
       env_variables = {
-        "BUCKET_NAME"     = var.gcs_bucket_name
+        "PROJECT_ID"      = var.project_id
+        "SERVICE_ACCOUNT" = var.service_account
+        "REGION"          = var.region
+        "BUCKET_NAME"     = var.bucket_name
         "POLYGON_API_KEY" = var.polygon_api_key
+
       }
     }
     node_config {
@@ -61,22 +74,57 @@ resource "google_composer_environment" "google_composer" {
   }
 }
 
+# Give storage admin permissions to the Composer
+resource "google_project_iam_member" "composer_storage_object_admin" {
+  project = var.project_id
+  role    = "roles/storage.objectAdmin"
+  member  = "serviceAccount:${var.service_account}"
+}
+
+# Give logging permissions to the Composer
+resource "google_project_iam_member" "composer_logging_writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${var.service_account}"
+}
+
+# Give Bigquery edit permissions to the Composer for later steps
+resource "google_project_iam_member" "composer_bigquery_editor" {
+  project = var.project_id
+  role    = "roles/bigquery.dataEditor"
+  member  = "serviceAccount:${var.service_account}"
+}
+
+
+# Necessary to read dag_gcs_prefix later after the creation of the composer environment
 data "google_composer_environment" "google_composer" {
   name       = var.composer_name
   region     = var.region
   depends_on = [google_composer_environment.google_composer]
 }
 
+# Define local variable to generate the Composer bucket name
 locals {
   composer_bucket_name = replace(replace(data.google_composer_environment.google_composer.config[0].dag_gcs_prefix, "gs://", ""), "/dags", "")
 }
 
+# Upload dag to Google Composer
 resource "google_storage_bucket_object" "upload_dag" {
   name       = "dags/stock_market_dag.py"
   bucket     = local.composer_bucket_name
-  source     = "${path.module}/../dags/stock_market_dag.py"
+  source     = "../dags/stock_market_dag.py"
   depends_on = [google_composer_environment.google_composer]
 }
+
+
+/*
+# Google Dataproc Serverless
+resource "google_dataproc_batch" "spark_batch" {
+  project  = var.project_id
+  location = var.region
+  batch_id = "spark-batch-${timestamp()}"
+}
+*/
 
 
 # BigQuery Dataset
@@ -87,7 +135,7 @@ resource "google_bigquery_dataset" "stock_market_dw" {
   delete_contents_on_destroy = true
 }
 
-# BigQuery Tables
+# BigQuery Table dim_company
 resource "google_bigquery_table" "dim_company" {
   dataset_id          = var.dataset_id
   table_id            = "dim_company"
@@ -96,6 +144,7 @@ resource "google_bigquery_table" "dim_company" {
   depends_on          = [google_bigquery_dataset.stock_market_dw]
 }
 
+# BigQuery Table dim_date
 resource "google_bigquery_table" "dim_date" {
   dataset_id          = var.dataset_id
   table_id            = "dim_date"
@@ -104,7 +153,7 @@ resource "google_bigquery_table" "dim_date" {
   depends_on          = [google_bigquery_dataset.stock_market_dw]
 }
 
-# Google BigQuery Table
+# BigQuery Table dim_exchange
 resource "google_bigquery_table" "dim_exchange" {
   dataset_id          = var.dataset_id
   table_id            = "dim_exchange"
@@ -113,6 +162,7 @@ resource "google_bigquery_table" "dim_exchange" {
   depends_on          = [google_bigquery_dataset.stock_market_dw]
 }
 
+# BigQuery Table fact_stock_price
 resource "google_bigquery_table" "fact_stock_price" {
   dataset_id          = var.dataset_id
   table_id            = "fact_stock_price"
@@ -120,3 +170,4 @@ resource "google_bigquery_table" "fact_stock_price" {
   deletion_protection = false
   depends_on          = [google_bigquery_dataset.stock_market_dw]
 }
+
