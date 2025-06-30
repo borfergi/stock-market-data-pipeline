@@ -64,7 +64,7 @@ resource "google_composer_environment" "google_composer" {
         "REGION"          = var.region
         "BUCKET_NAME"     = var.bucket_name
         "POLYGON_API_KEY" = var.polygon_api_key
-
+        "DATASET_ID"      = var.dataset_id
       }
     }
     node_config {
