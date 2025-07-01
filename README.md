@@ -22,19 +22,19 @@ By default we are fetching data from MAANG companies, but you can provide your p
 
 ## Data Architecture
 
-**Tech Architecture**
+### Tech Architecture
 
 ![alt text](images/stock-market-data-pipeline.png)
 
-Data Sources:
+**Data Sources**
 
-- Polygon API: The main data source. It provides transactional data to our pipeline.
-- ERP: We simulate a second data source as it's leaving CSV files into the raw layer of the data lake. It contains information about several companies and exchanges.
+- **Polygon API:** The main data source. It provides transactional data to our pipeline.
+- **ERP:** We simulate a second data source as it's leaving CSV files into the raw layer of the data lake. It contains information about several companies and exchanges.
 
 > [!NOTE]
 > If any of your selected companies is not included in data/erp_companies.csv file be free to add it.
 
-**Dimensional Model**
+### Dimensional Model
 
 ![alt text](images/stock-market-data-model.png)
 
