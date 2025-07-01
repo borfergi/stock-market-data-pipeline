@@ -14,11 +14,11 @@ By default we are fetching data from MAANG companies, but you can provide your p
 
 ## Tools and Technologies
 
-- Google Cloud Storage -> Data lake to store the data files in two layers: Raw and Processed with Parquet files.
-- Dataproc Serverless (PySpark) -> Handles data transformation and formatting into a dimensional model.
-- Google BigQuery as analytical data warehouse and dashboard backend.
-- Google Composer (Airflow) -> Orchestrates the end-to-end data workflow on a daily schedule.
-- Terraform: Manages infrastructure as code to deploy all cloud resources.
+- **Google Cloud Storage:** Data lake to store the data files in two layers: Raw and Processed with Parquet files.
+- **Dataproc Serverless (PySpark):** Handles data transformation and formatting into a dimensional model.
+- **Google BigQuery:** Analytical data warehouse and dashboard backend.
+- **Google Composer (Airflow):** Orchestrates the end-to-end data workflow on a daily schedule.
+- **Terraform:** Manages infrastructure as code to deploy all cloud resources.
 
 ## Data Architecture
 
