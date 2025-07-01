@@ -44,11 +44,17 @@ resource "google_storage_bucket_object" "dim_date_csv" {
 resource "google_storage_bucket_object" "upload_dataproc_script" {
   name         = "dataproc_jobs/transform_stock_data.py"
   bucket       = var.bucket_name
-  source       = "../dataproc_jobs/transform_stock_data.py"
+  source       = "../dataproc_jobs/transform_stock_data_pipeline.py"
   content_type = "text/x-python"
   depends_on   = [google_storage_bucket.datalake_stock_market_bucket]
 }
 
+# Give dataproc batch creation permissions to your service account
+resource "google_project_iam_member" "composer_dataproc_permissions" {
+  project = var.project_id
+  role    = "roles/dataproc.admin"
+  member  = "serviceAccount:${var.service_account}"
+}
 
 # Google Composer - Airflow
 resource "google_composer_environment" "google_composer" {
@@ -59,7 +65,6 @@ resource "google_composer_environment" "google_composer" {
     software_config {
       image_version = "composer-3-airflow-2.10.5-build.6" # Composer and Airflow versions
       env_variables = {
-        "PROJECT_ID"      = var.project_id
         "SERVICE_ACCOUNT" = var.service_account
         "REGION"          = var.region
         "BUCKET_NAME"     = var.bucket_name
@@ -115,16 +120,6 @@ resource "google_storage_bucket_object" "upload_dag" {
   source     = "../dags/stock_market_dag.py"
   depends_on = [google_composer_environment.google_composer]
 }
-
-
-/*
-# Google Dataproc Serverless
-resource "google_dataproc_batch" "spark_batch" {
-  project  = var.project_id
-  location = var.region
-  batch_id = "spark-batch-${timestamp()}"
-}
-*/
 
 
 # BigQuery Dataset
