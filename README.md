@@ -32,7 +32,7 @@ By default we are fetching data from MAANG companies, but you can provide your p
 - **ERP:** We simulate a second data source as it's leaving CSV files into the raw layer of the data lake. It contains information about several companies and exchanges.
 
 > [!NOTE]
-> If any of your selected companies is not included in data/erp_companies.csv file be free to add it.
+> If any of your selected companies is not included in `data/erp_companies.csv` file be free to add it.
 
 ### Dimensional Model
 
