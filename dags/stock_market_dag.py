@@ -7,13 +7,13 @@ from airflow.operators.python import PythonOperator
 from airflow.models import Variable
 from airflow.providers.google.cloud.sensors.gcs import GCSObjectExistenceSensor
 from airflow.providers.google.cloud.operators.dataproc import DataprocCreateBatchOperator
-from airflow.providers.google.cloud.operators.bigquery import GCSToBigQueryOperator
+from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
 
 from google.cloud import storage
 
 
 # Parameters
-PROJECT_ID = os.environ.get("PROJECT_ID")
+PROJECT_ID = os.environ.get("GOOGLE_CLOUD_PROJECT")
 SERVICE_ACCOUNT = os.environ.get("SERVICE_ACCOUNT")
 REGION = os.environ.get("REGION")
 BUCKET_NAME = os.environ.get("BUCKET_NAME")

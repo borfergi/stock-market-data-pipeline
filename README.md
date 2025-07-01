@@ -8,7 +8,7 @@ The architecture is based on Google Cloud Services and deployed using Terraform 
 
 ## Dataset
 
-[Polygon API](https://polygon.io/) provides a free tier for this kind of project. There exist some limitations but we can to extract the previous day stock price of 5 companies every minute.
+[Polygon API](https://polygon.io/) provides a free tier for this kind of project. There exist some limitations but we can extract the previous day stock price of 5 companies every minute.
 
 By default we are fetching data from MAANG companies, but you can provide your preferred companies introducing its symbol when it is asked to.
 
@@ -24,72 +24,96 @@ By default we are fetching data from MAANG companies, but you can provide your p
 
 **Tech Architecture**
 
--- Future image --
+![alt text](images/stock-market-data-pipeline.png)
+
+Data Sources:
+
+- Polygon API: The main data source. It provides transactional data to our pipeline.
+- ERP: We simulate a second data source as it's leaving CSV files into the raw layer of the data lake. It contains information about several companies and exchanges.
+
+> [!NOTE]
+> If any of your selected companies is not included in data/erp_companies.csv file be free to add it.
 
 **Dimensional Model**
 
--- Future image --
+![alt text](images/stock-market-data-model.png)
 
-- fact_stock_price:
-- dim_company:
-- dim_exchange:
-- dim_date:
+- **fact_stock_price:** This is the central fact table that records daily stock price metrics such as open, close, high, low, and volume. Each record is linked to a specific company, exchange, and date via foreign keys. Its data is fetched from Polygon API and added to the table every time the process runs.
+- **dim_company:** A dimension table that stores information about companies. It is loaded from the ERP file before transformations. The data is loaded adfter truncating the table.
+- **dim_exchange:** A dimension table that stores information stock exchanges. It is loaded from the ERP file before transformations. The data is loaded adfter truncating the table.
+- **dim_date:** A standard date dimension table that provides useful time attributes. It is loaded from an already prepared CSV file.
 
-## Process
-
-### Pre-requisites
+## Setup
 
 > [!WARNING]
 > It's possible to be charged. Pending explanation...
 
+### Pre-requisites
+
 > [!NOTE]
 > Skip the following steps if they are already done.
 
-- [GCP Account and gcloud CLI installation]()
-- [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-- Follow the steps to [set up GCP](setup/gcp_setup.md)
-- Polygon API ....
+- [GCP Account and gcloud CLI installation](setup/gcp_setup.md)
 
-### Setup
+- [Terraform installation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+
+- [Polygon API account creation](https://polygon.io/)
+
+### Deployment
+
+- Clone git repo:
+
+```
+git clone
+```
+
+- Go into infra directory:
+
+```
+cd financial-market-data-pipeline\infra
+```
 
 - Set project ID, service_account, and polygon key in infra/variables.tf file
 
 MAANG companies. If you want to analize other companes, change the symbols...
 
+- Initiate terraform and download dependencies:
+
 ```
+cd infra/
 terraform init
 ```
+
+- View the Terraform plan:
 
 ```
 terraform plan
 ```
 
-- A plan for the creation of the different resources will be shown.
-
 > [!NOTE]
 > While it's possible to create a Dataproc cluster manually, this project takes advantage of Airflow to automate the entire process: from provisioning the Dataproc cluster, running the PySpark job, to automatically delete the cluster once the job is complete.
 
-- Create the resources
+- Create the resources:
 
 ```
 terraform apply
 ```
 
-- The environment could take XX minutes to be completely deployed
+- Type `yes` to confirm. The environment could take 20-25 minutes to be completely deployed.
 
-- Type `yes` to confirm.
+- Log in into GCP Console and go to Composer service.
 
-- Upload manually erp_companies.csv file to activate the Composer
-  gsutil cp erp_companies.csv gs://datalake-stock-market-bucket/raw
-
-```
-gsutils ...
-```
-
-- Destroy the infra:
+- To activate the Composer sensor, upload the provided erp_companies.csv file:
 
 ```
-cd infra/
+gsutil cp ../data/erp_companies.csv gs://datalake-stock-market-bucket/raw/ERP/
+```
+
+- When all the tasks are finished, you will be able to see raw and processed data inside GCS and to run queries in the dimensial model on BigQuery.
+
+- Once you are done with the project, finish the cloud services:
+
+```
 terraform destroy
 ```
 
