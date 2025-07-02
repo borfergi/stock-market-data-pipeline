@@ -46,7 +46,7 @@ By default we are fetching data from MAANG companies, but you can provide your p
 ## Setup
 
 > [!WARNING]
-> It's possible to be charged. Pending explanation...
+> Please be aware that this project deploys and runs Google cloud services that may incur charges.
 
 ### Pre-requisites
 
@@ -70,7 +70,7 @@ git clone
 - Go into infra directory:
 
 ```
-cd financial-market-data-pipeline\infra
+cd financial-market-data-pipeline/infra
 ```
 
 - Set project ID, service_account, and polygon key in infra/variables.tf file
@@ -80,7 +80,6 @@ MAANG companies. If you want to analize other companes, change the symbols...
 - Initiate terraform and download dependencies:
 
 ```
-cd infra/
 terraform init
 ```
 
