@@ -20,7 +20,6 @@ gcloud init
 ## Setup Credentials
 
 - Create a Service Account:
-
   - Go to GCP Console > IAM & Admin > Service Accounts
   - Select `+ CREATE SERVICE ACCOUNT`
   - Enter a name and description
